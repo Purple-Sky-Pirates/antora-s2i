@@ -24,14 +24,20 @@ fi
 echo "---> Installing application source..."
 cp -Rf /tmp/src/. ./
 
-echo "---> Generating git repo for antora to work..."
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+echo "---> Checking if this is a git repo..."
+if [[ `git status --porcelain --untracked-files=no` ]]; then
+  echo "---> This is already a git repo..."
+else
+  echo "---> Generating git repo for antora to work..."
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
 
-git init .
-touch .gitignore
-git add .gitignore
-git commit -m 'initialize repository'
+  git init .
+  touch .gitignore
+  git add .gitignore
+  git commit -m 'initialize repository'
+fi
+
 
 echo "---> Building application from source..."
 # Add build steps for your application, eg npm install, bundle install, pip install, etc.
